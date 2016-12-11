@@ -69,4 +69,3 @@ mem_reg_sel<=mem_reg_sel1;
 mem_write<=mem_write1;
 reg_write<=reg_write1;
 end RTL;
-
