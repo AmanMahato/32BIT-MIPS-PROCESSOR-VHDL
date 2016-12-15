@@ -1,0 +1,47 @@
+Assembly for Encryption
+
+LW R0 R1 0
+LW R0 R2 1
+ADD R0 R0 R3
+ADDI R0 R30 26 
+ADD R0 R0 R4
+ADD R0 R0 R5
+LW R3 R31 2
+ADD R1 R31 R4
+LW R3 R31 3
+ADD R2 R31 R5
+ADDI R3 R3 2
+	BEQ R3 R30 End_Enc				Label: M_Loop
+	AND R4 R5 R6
+	NOR R4 R5 R7
+	NOR R6 R7 R8
+	ANDI R5 R7 32
+	ADD R0 R0 R6
+	ADD R0 R8 R9
+		BEQ R6 R7 End_ALoop			Label:Start_ALoop
+		SHL R9 R10 1
+		SHR R9 R11 31
+		ADD R10 R11 R9
+		ADDI R6 R6 1
+		JMP Start_ALoop
+	LW R3 R31 2						Label: End_ALoop
+	ADD R9 R31 R4
+	AND R4 R5 R6
+	NOR R5 R4 R7
+	NOR R6 R7 R12
+	ANDI R4 R7 32
+	ADD R0 R0 R6
+	ADD R0 R12 R13
+		BEQ R6 R7 End_BLoop			Label: Start_BLoop
+		SHL R13 R10 1
+		SHR R13 R11 31
+		ADD R10 R11 R13
+		ADDI R6 R6 1
+		JMP Start_BLoop
+	LW R3 R31 3						Label: End_BLoop
+	ADD R13 R31 R5
+	ADDI R3 R3 2
+	JMP M_Loop
+SW R0 R4 32							Label: End_Enc
+SW R0 R5 33
+HAL

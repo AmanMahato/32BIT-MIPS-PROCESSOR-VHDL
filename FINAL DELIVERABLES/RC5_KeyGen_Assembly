@@ -1,0 +1,36 @@
+Assembly Program for RC05
+
+ADDI R0 R17 78
+ADDI R0 R18 26
+ADDI R0 R19 4
+	BEQ R17 R10 End_Key				Label: M_Loop
+	LW R8 R11 2
+	ADD R11 R4 R11
+	ADD R11 R7 R3
+	SHL R3 R13 3
+	SHR R3 R14 29
+	ADD R13 R14 R4
+	ADD R4 R2 R5
+	LW R9 R12 28
+	ADD R12 R5 R6
+	ANDI R5 R14 32
+	ADD R0 R0 R13
+	ADD R0 R6 R7
+		BEQ R13 R14 End_SLoop		Label: Start_SLoop
+		SHL R7 R15 1
+		SHR R7 R16 31
+		ADD R15 R16 R7
+		ADDI R13 R13 1
+		JMP Start_SLoop
+	SW R8 R4 2						Label: End_SLoop
+	SW R9 R7 28
+	ADDI R8 R8 1
+	ADDI R9 R9 1
+	ADDI R10 R10 1
+	BNE R8 R18 SCnt_Rst
+		ADD R0 R0 R8
+	BNE R9 R19 LCnt_Rst				Label: SCnt_Rst
+		ADD R0 R0 R9
+	JMP M_Loop						Label: LCnt_Rst
+HAL 								Label: End_Key
+	

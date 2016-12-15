@@ -1,0 +1,44 @@
+Code for Decryption
+
+LW R0 R4 32
+LW R0 R5 33
+ADDI R0 R3 24
+	BEQ R3 End_Dec				Label: M_Loop
+	LW R3 R8 3
+	SUB R5 R8 R7
+	ANDI R4 R9 32
+	ADD R0 R0 R8
+	ADD RO R7 R11
+		BEQ R8 R9 End_B			Label: Start_B
+		SHR R11 R12 1
+		SHL R11 R13 31
+		ADD R12 R13 R11
+		ADDI R8 R8 1
+		JMP Start_B
+	AND R4 R11 R8				Label: End_B
+	NOR R4 R11 R9
+	NOR R8 R9 R5
+	LW R3 R8 2
+	SUB R4 R8 R6
+	ANDI R5 R9 32
+	ADD R0 R0 R8
+	ADD RO R6 R10
+		BEQ R8 R9 End_A			Label: Start_A
+		SHR R10 R12 1
+		SHL R10 R13 31
+		ADD R12 R13 R10
+		ADDI R8 R8 1
+		JMP Start_A
+	NOR R10 R5 R8				Label: End_A
+	AND R5 R10 R9
+	NOR R8 R9 R4
+	SUBI R3 R3 2
+	JMP M_Loop
+LW R3 R8 3						Label: End_Dec
+SUB R5 R8 R5
+LW R3 R8 2
+SUB R4 R8 R4
+SW R0 R4 34
+SW R0 R5 35
+HAL
+	
